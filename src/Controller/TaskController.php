@@ -17,7 +17,7 @@ class TaskController extends AbstractController
     public function index(TaskRepository $taskRepository): Response
     {
         return $this->render('task/index.html.twig', [
-            'tasks' => $taskRepository->findAll(),
+            'tasks' => $taskRepository->findBy(["user" => $this->getUser()]),
         ]);
     }
 
@@ -29,6 +29,8 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $task->setIsDone(false);
+            $task->setUser($this->getUser());
             $taskRepository->save($task, true);
 
             return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
