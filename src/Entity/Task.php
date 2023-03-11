@@ -20,7 +20,7 @@ class Task
     #[ORM\Column(length: 255)]
     private ?string $priority = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dueDate = null;
 
     public function getId(): ?int

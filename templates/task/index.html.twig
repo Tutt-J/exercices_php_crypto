@@ -1,20 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes tâches{% endblock %}
+{% block title %}Task index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container mt-3">
+    <h1>Vos tâches</h1>
+    <a class="btn btn-primary" href="{{ path('app_task_new') }}">Créer une tâche</a>
 
-<div class="example-wrapper">
-    <h1>Mes tâches</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Priorité</th>
+                <th>Date de rendu</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.name }}</td>
+                <td class="
+                        {% if task.priority == 'Basse' %}
+                            bg-success
+                        {% elseif task.priority == 'Moyenne' %}
+                            bg-warning
+                        {% elseif task.priority == 'Haute' %}   
+                            bg-danger
+                        {% endif %}
+                ">{{ task.priority }}</td>
+                <td>{{ task.dueDate ? task.dueDate|date('d/m/Y') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_task_edit', {'id': task.id}) }}">Modifier</a>
+                    <a href="{{ path('app_task_delete', {'id': task.id}) }}">Supprimer</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Aucune tâche.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/exercice_php_cryptographie/src/Controller/TaskController.php'|file_link(0) }}">src/Controller/TaskController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/exercice_php_cryptographie/templates/task/index.html.twig'|file_link(0) }}">templates/task/index.html.twig</a></code></li>
-    </ul>
 </div>
+
 {% endblock %}
