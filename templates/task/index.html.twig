@@ -35,6 +35,11 @@
                 <td>
                     <a href="{{ path('app_task_edit', {'id': task.id}) }}">Modifier</a>
                     <a href="{{ path('app_task_delete', {'id': task.id}) }}">Supprimer</a>
+                    {% if task.isDone == false %}
+                    <a href="{{ path('app_task_done', {'id': task.id}) }}">Marquer comme fait</a>
+                    {% else %}
+                    <p class="text-success">Tâche terminée !</p>
+                    {% endif %}
                 </td>
             </tr>
             {% else %}

@@ -66,6 +66,16 @@ class TaskController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/done', name: 'app_task_done', methods: ['GET', 'POST'])]
+    public function done(Request $request, Task $task, TaskRepository $taskRepository): Response
+    {
+            $task->setIsDone(true);
+            $taskRepository->save($task, true);
+
+            return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+
+    }
+
     #[Route('/{id}', name: 'app_task_delete', methods: ['POST'])]
     public function delete(Request $request, Task $task, TaskRepository $taskRepository): Response
     {
