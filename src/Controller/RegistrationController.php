@@ -21,7 +21,9 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //encrypt the email
             $emailEncrypted = openssl_encrypt($form->getData()->getEmail(), "aes-128-cbc", $_ENV['KEY'], $options=0, $_ENV['IV']);
+            $user->setEmail($emailEncrypted);
 
             // encode the plain password
             $user->setPassword(
@@ -30,8 +32,6 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
-            $user->setEmail($emailEncrypted);
 
             $entityManager->persist($user);
             $entityManager->flush();
