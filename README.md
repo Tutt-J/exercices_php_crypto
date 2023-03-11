@@ -19,9 +19,9 @@ Ceci est une façon de faire l'exercice avec Symfony 6.2.
 - config/packages/security.yaml
 
 
-## Environment Variables
+## Variables d'environnement
 
-Vous aurez besoin de créer un fichier .env.local avec les données suivantes
+Vous aurez besoin de créer un fichier .env.local avec les données suivantes :
 
 `DATABASE_URL`
 
